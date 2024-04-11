@@ -1,5 +1,6 @@
 import { UsergroupAddOutlined } from '@ant-design/icons';
 import { Button, Card, Checkbox, Form, Input } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 const onFinish = (values) => {
   console.log('Success:', values);
@@ -15,7 +16,6 @@ export default function Login() {
         <h1 className='text-center text-3xl mb-5 text-[#455a64]'>Login</h1>
         <Form
           name="basic"
-          // form={form}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -57,12 +57,9 @@ export default function Login() {
               Login
             </Button>
           </Form.Item>
-          {/* <div className='text-center'>
-            <a href="/">Back to Home</a>
-          </div> */}
           <div className='text-center bg-gray-200 p-2 rounded-lg'>
             <span>Don&apos;t have an account? </span>
-            <a href="" className='text-[#0756da]'>Sign Up</a>
+            <NavLink to={`/signup`} className='text-[#0756da]'>Sign Up</NavLink>
           </div>
         </Form>
       </Card>
