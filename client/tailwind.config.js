@@ -10,6 +10,9 @@ export default {
         inter: ["inter", "sans-serif"],
         roboto: ["roboto", "sans-serif"],
       },
+      colors: {
+        'theme': '#0756da',
+      },
     },
   },
   plugins: [],

@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import Navbar from './components/layout/navbar'
 import Home from './components/home'
-import Jobs from './components/jobs'
 import Gigs from './components/gigs'
+import Login from './components/login'
 
 import { createBrowserRouter, Route, RouterProvider, Routes} from 'react-router-dom'
 
@@ -14,8 +14,8 @@ function Root() {
     <Navbar />
     <Routes>
       <Route path="/*" element={<Home/>}/>
-      <Route path="/jobs/*" element={<Jobs/>}/>
       <Route path="/gigs/*" element={<Gigs/>}/>
+      <Route path="/login/*" element={<Login/>}/>
     </Routes>
     </>
   );
