@@ -5,6 +5,7 @@ import Home from './components/home'
 import Gigs from './components/gigs'
 import Login from './components/login'
 import Signup from './components/signup'
+import Footer from './components/layout/footer'
 
 import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom'
 
@@ -19,6 +20,7 @@ function Root() {
         <Route path="/login/*" element={<Login />} />
         <Route path="/signup/*" element={<Signup />} />
       </Routes>
+      <Footer />
     </>
   );
 }
