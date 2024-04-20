@@ -146,9 +146,9 @@ export default function Gigs() {
             <h1 className="text-2xl font-semibold">Name: {post.name}</h1>
             <Divider></Divider>
             <p className="text-xl mb-2">Subject: {post.subject}</p>
-            <p className="text-lg mb-2">Location: <span><EnvironmentOutlined /></span> {post.location}</p>
-            <p className="text-base mb-2">Description:</p>
-            <p className="pl-5">{post.description}</p>
+            <p className="text-xl mb-2">Location: <span><EnvironmentOutlined /></span> {post.location}</p>
+            <p className="text-xl mb-2">Description:</p>
+            <p className="text-lg pl-5">{post.description}</p>
           </Card>
         ))}
       </div>
