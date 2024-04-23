@@ -19,8 +19,8 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (values) => {
+    const { email, password } = values;
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
@@ -71,6 +71,6 @@ export default function Login() {
           </div>
         </Form>
       </Card>
-    </div >
-  )
+    </div>
+  );
 }
