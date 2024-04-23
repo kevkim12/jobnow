@@ -7,8 +7,6 @@ import Login from './components/login'
 import Signup from './components/signup'
 import Footer from './components/layout/footer'
 
-import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom'
-
 
 function Root() {
   return (
