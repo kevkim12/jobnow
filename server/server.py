@@ -48,5 +48,23 @@ def login():
         return jsonify({"message": "Login successful", "user": dict(user)}), 200
     return jsonify({"error": "Invalid credentials"}), 401
 
+@app.route('/gigs', methods=['POST'])
+def create_gig():
+    db = get_db()
+    data = request.json
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO gigs (name, subject, location, description, price) VALUES (?, ?, ?, ?, ?)",
+                   (data['name'], data['subject'], data['location'], data['description'], data['price']))
+    db.commit()
+    return jsonify({"message": "Gig created successfully"}), 201
+
+@app.route('/gigs', methods=['GET'])
+def get_gigs():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM gigs")
+    gigs = cursor.fetchall()
+    return jsonify([dict(gig) for gig in gigs]), 200
+
 if __name__ == '__main__':
     app.run(debug=True)
