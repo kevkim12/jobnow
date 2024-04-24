@@ -1,8 +1,8 @@
 import { UsergroupAddOutlined } from '@ant-design/icons';
 import { Button, Card, Checkbox, Form, Input } from 'antd';
-import { NavLink, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
 import axios from 'axios';
+import { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ export default function Login() {
             </Button>
           </Form.Item>
           <div className='text-center bg-gray-200 p-2 rounded-lg'>
-            <span>Don't have an account? </span>
+            <span>Don&apos;t have an account? </span>
             <NavLink to="/signup" className='text-[#0756da]'>Sign Up</NavLink>
           </div>
         </Form>

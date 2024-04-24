@@ -24,7 +24,7 @@ def close_connection(exception):
 @app.route('/signup', methods=['POST'])
 def signup():
     db = get_db()
-    data = request.json
+    data = request.json 
     cursor = db.cursor()
     try:
         cursor.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", 
