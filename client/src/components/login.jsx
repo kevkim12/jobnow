@@ -12,6 +12,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [invalidPassword, setInvalidPassword] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -33,6 +34,7 @@ export default function Login() {
       const errorMessage = error.response ? error.response.data.error : 'Login failed';
       console.error(errorMessage);
       setError(errorMessage);
+      setInvalidPassword(true);
     }
   };
 
@@ -60,6 +62,7 @@ export default function Login() {
           >
             <Input.Password placeholder="Password" value={password} onChange={handlePasswordChange} />
           </Form.Item>
+          <p id="credential-error" className={`text-center text-red-600 ${invalidPassword ? 'visible' : 'hidden'}`}>Invalid login credentials!</p>
           <Form.Item>
             <Button type="primary" htmlType="submit" className='w-full bg-[#0756da] rounded-lg' icon={<UsergroupAddOutlined />}>
               Login
