@@ -1,5 +1,6 @@
 import { DollarOutlined, EnvironmentOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Card, Divider, Modal, message } from 'antd';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export default function Gigs() {
@@ -12,6 +13,7 @@ export default function Gigs() {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [price, setPrice] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const savedPosts = JSON.parse(localStorage.getItem('posts'));
@@ -25,6 +27,20 @@ export default function Gigs() {
     localStorage.setItem('posts', JSON.stringify(posts));
     setFilteredPosts(posts);
   }, [posts]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/gigs');
+        setPosts(response.data);
+        setFilteredPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -46,25 +62,34 @@ export default function Gigs() {
     setPrice(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name.trim() || !subject.trim() || !location.trim() || !description.trim() || !price.trim()) {
       message.error("Please fill in all fields.");
       return;
     }
-    const newPost = {
-      name: name,
-      subject: subject,
-      location: location,
-      description: description,
-      price: price
-    };
-    setPosts([...posts, newPost]);
-    setName("");
-    setSubject("");
-    setLocation("");
-    setDescription("");
-    setPrice("");
-    setIsModalOpen(false);
+
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/gigs', { name, subject, location, price, description });
+      console.log('Create post Success:', response.data.message);
+      const newPost = {
+        name,
+        subject,
+        location,
+        description,
+        price
+      };
+      setPosts([...posts, newPost]);
+      setName("");
+      setSubject("");
+      setLocation("");
+      setDescription("");
+      setPrice("");
+      setIsModalOpen(false);
+    } catch (error) {
+      const errorMessage = error.response ? error.response.data.error : 'Create post failed';
+      console.error(errorMessage);
+      setError(errorMessage);
+    }
   };
 
   const handleSearch = () => {
@@ -161,7 +186,29 @@ export default function Gigs() {
       <div className="w-1/2 mt-10 mb-10 gap-4 overflow-auto">
         {filteredPosts.map((post, index) => (
           <Card key={index} className="mb-4 border-black">
-            <h1 className="text-2xl font-semibold">Name: {post.name}</h1>
+            <div className="flex justify-between items-center mb-2">
+              <h1 className="text-2xl font-semibold">Name: {post.name}</h1>
+              <button className=" bg-theme text-white p-2 rounded-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24 "
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                </svg>
+
+                {/* image when post is saved */}
+                {/* <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-6 h-6">
+                  <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />
+                </svg> */}
+              </button>
+            </div>
             <Divider></Divider>
             <p className="text-xl mb-2">Subject: {post.subject}</p>
             <p className="text-xl mb-2">Location: <span><EnvironmentOutlined /></span> {post.location}</p>

@@ -1,7 +1,7 @@
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input } from 'antd';
-import React, { useState } from 'react';
 import axios from 'axios';
+import { useState } from 'react';
 import { validateEmail, validatePassword, validateUsername } from '../utility/validation';
 
 export default function Signup() {
@@ -39,7 +39,7 @@ export default function Signup() {
             name="name"
             rules={[
               { required: true, message: 'A name is required.' },
-              { validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error('Name must be alphanumeric and between 2 to 20 characters long'))) }
+              { validator: (_, value) => (validateUsername(value) ? Promise.resolve() : Promise.reject(new Error('Name must be alphanumeric and between 2 to 20 characters long'))) }
             ]}
           >
             <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
