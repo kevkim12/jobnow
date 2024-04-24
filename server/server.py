@@ -66,5 +66,20 @@ def get_gigs():
     gigs = cursor.fetchall()
     return jsonify([dict(gig) for gig in gigs]), 200
 
+@app.route('/save_gig', methods=['POST'])
+def save_gig():
+    db = get_db()
+    data = request.json
+    cursor = db.cursor()
+    try:
+        cursor.execute("INSERT INTO saved_gigs (user_id, gig_id) VALUES (?, ?)",
+                       (data['user_id'], data['gig_id']))
+        db.commit()
+        return jsonify({"message": "Gig saved successfully"}), 201
+    except sqlite3.IntegrityError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": "Server error", "details": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

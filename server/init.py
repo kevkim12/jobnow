@@ -29,6 +29,20 @@ def create_db():
             price TEXT NOT NULL
         );
     ''')
+
+    c.execute('''
+        DROP TABLE IF EXISTS saved_gigs;
+    ''')
+    c.execute('''
+        CREATE TABLE saved_gigs (
+            user_id INTEGER,
+            gig_id INTEGER,
+            PRIMARY KEY (user_id, gig_id),
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            FOREIGN KEY (gig_id) REFERENCES gigs(id)
+        );
+    ''')
+
     conn.commit()
     conn.close()
 
