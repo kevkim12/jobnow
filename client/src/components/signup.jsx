@@ -3,12 +3,17 @@ import { Button, Card, Form, Input } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { validateEmail, validatePassword, validateUsername } from '../utility/validation';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+
 
 export default function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignup = async (values) => {
     const { name, email, password } = values;
@@ -16,6 +21,7 @@ export default function Signup() {
     try {
       const response = await axios.post('http://127.0.0.1:5000/signup', { name, email, password });
       console.log('Signup Success:', response.data.message);
+      navigate('/registration-successful');
     } catch (error) {
       const errorMessage = error.response ? error.response.data.error : 'Signup failed';
       console.error(errorMessage);

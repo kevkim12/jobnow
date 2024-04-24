@@ -7,6 +7,7 @@ import JobList from './components/JobList'
 import Login from './components/login'
 import Signup from './components/signup'
 import Footer from './components/layout/footer'
+import RegistrationSuccessful from './components/RegistrationSuccessful'
 
 import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom'
 import { AuthProvider } from './components/AuthContext'
@@ -22,6 +23,7 @@ function Root() {
           <Route path="/jobs/*" element={<JobList/>} />
           <Route path="/login/*" element={<Login />} />
           <Route path="/signup/*" element={<Signup />} />
+          <Route path="/registration-successful/*" element={<RegistrationSuccessful />} />
         </Routes>
         <Footer />
       </AuthProvider>
