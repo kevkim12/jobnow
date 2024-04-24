@@ -13,6 +13,9 @@ export default function Navbar() {
         <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={`/gigs`}>
           Gigs
         </NavLink>
+        <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={`/jobs`}>
+          Jobs
+        </NavLink>
         <NavLink className="font-roboto text-white text-xl py-2 px-4 rounded bg-theme ml-2.5 hover:text-theme hover:bg-slate-200" to={`/login`}>
           Login
         </NavLink>
