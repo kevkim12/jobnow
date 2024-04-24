@@ -3,8 +3,10 @@ import { Button, Card, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 export default function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -25,6 +27,7 @@ export default function Login() {
     try {
       const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
       console.log(response.data.message);
+      login();
       navigate('/');
     } catch (error) {
       const errorMessage = error.response ? error.response.data.error : 'Login failed';

@@ -9,19 +9,22 @@ import Signup from './components/signup'
 import Footer from './components/layout/footer'
 
 import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom'
+import { AuthProvider } from './components/AuthContext'
 
 function Root() {
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/*" element={<Home />} />
-        <Route path="/gigs/*" element={<Gigs />} />
-        <Route path="/jobs/*" element={<JobList/>} />
-        <Route path="/login/*" element={<Login />} />
-        <Route path="/signup/*" element={<Signup />} />
-      </Routes>
-      <Footer />
+      <AuthProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/*" element={<Home />} />
+          <Route path="/gigs/*" element={<Gigs />} />
+          <Route path="/jobs/*" element={<JobList/>} />
+          <Route path="/login/*" element={<Login />} />
+          <Route path="/signup/*" element={<Signup />} />
+        </Routes>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
