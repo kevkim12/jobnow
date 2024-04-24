@@ -5,7 +5,6 @@ import logo from '../../assets/logo.png';
 
 export default function Navbar() {
   const { isLoggedIn, logout } = useAuth();
-  console.log("AuthProvider:", isLoggedIn);
 
   return (
     <div className="flex justify-between items-center p-4 bg-black w-full">

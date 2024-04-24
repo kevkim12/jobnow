@@ -61,9 +61,6 @@ export default function Login() {
             <Input.Password placeholder="Password" value={password} onChange={handlePasswordChange} />
           </Form.Item>
           <Form.Item>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-          <Form.Item>
             <Button type="primary" htmlType="submit" className='w-full bg-[#0756da] rounded-lg' icon={<UsergroupAddOutlined />}>
               Login
             </Button>
