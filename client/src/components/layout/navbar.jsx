@@ -10,13 +10,18 @@ export default function Navbar() {
     <div className="flex justify-between items-center p-4 bg-black w-full">
       <img src={logo} alt="logo" className="w-1/12 pl-3" />
       <div>
-        <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={`/`}>
+        <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={"/"}>
           Home
         </NavLink>
-        <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={`/gigs`}>
+        {isLoggedIn && (
+          <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={"/saved"}>
+            Saved
+          </NavLink>
+        )}
+        <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={"/gigs"}>
           Gigs
         </NavLink>
-        <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={`/jobs`}>
+        <NavLink className="hover:text-theme font-roboto text-white text-xl py-6 px-6 rounded" to={"/jobs"}>
           Jobs
         </NavLink>
         {isLoggedIn ? (

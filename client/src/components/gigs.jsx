@@ -30,7 +30,7 @@ export default function Gigs() {
   }, [posts]);
 
   useEffect(() => {
-    const savedPosts = JSON.parse(localStorage.getItem('posts'));
+    const savedPosts = JSON.parse(localStorage.getItem("posts"));
     if (savedPosts) {
       setPosts(savedPosts);
       setFilteredPosts(savedPosts);
@@ -38,18 +38,18 @@ export default function Gigs() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('posts', JSON.stringify(posts));
+    localStorage.setItem("posts", JSON.stringify(posts));
     setFilteredPosts(posts);
   }, [posts]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/gigs');
+        const response = await axios.get("http://127.0.0.1:5000/gigs");
         setPosts(response.data);
         setFilteredPosts(response.data);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
       }
     };
 
@@ -83,7 +83,7 @@ export default function Gigs() {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/gigs', { name, subject, location, price, description });
+      const response = await axios.post("http://127.0.0.1:5000/gigs", { name, subject, location, price, description });
       const newPost = {
         name,
         subject,
@@ -99,7 +99,7 @@ export default function Gigs() {
       setPrice("");
       setIsModalOpen(false);
     } catch (error) {
-      const errorMessage = error.response ? error.response.data.error : 'Create post failed';
+      const errorMessage = error.response ? error.response.data.error : "Create post failed";
       console.error(errorMessage);
       setError(errorMessage);
     }
@@ -107,14 +107,14 @@ export default function Gigs() {
 
   const bookmarkPost = async (gigId) => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/save_gig', { userId, gigId });
+      const response = await axios.post("http://127.0.0.1:5000/save_gig", { userId, gigId });
       if (response.data.message.includes("added")) {
         setBookmarkedPosts(prev => ({ ...prev, [gigId]: true }));
       } else if (response.data.message.includes("removed")) {
         setBookmarkedPosts(prev => ({ ...prev, [gigId]: false }));
       }
     } catch (error) {
-      console.error('Error saving gig:', error.response ? error.response.data.error : error.message);
+      console.error("Error saving gig:", error.response ? error.response.data.error : error.message);
     }
   };
 
@@ -123,7 +123,7 @@ export default function Gigs() {
         const response = await axios.get(`http://127.0.0.1:5000/saved_gigs?user_id=${userId}&gig_id=${gigId}`);
         return response.data.saved;
     } catch (error) {
-      console.error('Error checking if gig is bookmarked:', error);
+      console.error("Error checking if gig is bookmarked:", error);
       return false;
     }
 }
