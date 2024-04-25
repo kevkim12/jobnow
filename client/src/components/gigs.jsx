@@ -113,7 +113,13 @@ export default function Gigs() {
     try {
       const response = await axios.post('http://127.0.0.1:5000/save_gig', { userId, gigId });
       console.log(response.data.message);
-  } catch (error) {
+      // Toggle the bookmark state based on the response
+      if (response.data.message.includes("added")) {
+        setBookmarkedPosts(prev => ({ ...prev, [gigId]: true }));
+      } else if (response.data.message.includes("removed")) {
+        setBookmarkedPosts(prev => ({ ...prev, [gigId]: false }));
+      }
+    } catch (error) {
       console.error('Error saving gig:', error.response ? error.response.data.error : error.message);
     }
   };
