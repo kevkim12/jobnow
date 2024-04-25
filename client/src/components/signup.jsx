@@ -2,8 +2,8 @@ import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { validateEmail, validatePassword, validateUsername } from '../utility/validation';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 
