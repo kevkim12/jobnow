@@ -20,7 +20,6 @@ export default function Signup() {
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/signup', { name, email, password });
-      console.log('Signup Success:', response.data.message);
       navigate('/registration-successful');
     } catch (error) {
       const errorMessage = error.response ? error.response.data.error : 'Signup failed';

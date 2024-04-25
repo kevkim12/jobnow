@@ -48,7 +48,6 @@ export default function Gigs() {
         const response = await axios.get('http://127.0.0.1:5000/gigs');
         setPosts(response.data);
         setFilteredPosts(response.data);
-        console.log("response.data", response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);
       }
@@ -85,7 +84,6 @@ export default function Gigs() {
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/gigs', { name, subject, location, price, description });
-      console.log('Create post Success:', response.data.message);
       const newPost = {
         name,
         subject,
@@ -108,12 +106,8 @@ export default function Gigs() {
   };
 
   const bookmarkPost = async (gigId) => {
-    console.log("Bookmark post with user id:", userId);
-    console.log("Bookmark post with gig id:", gigId);
     try {
       const response = await axios.post('http://127.0.0.1:5000/save_gig', { userId, gigId });
-      console.log(response.data.message);
-      // Toggle the bookmark state based on the response
       if (response.data.message.includes("added")) {
         setBookmarkedPosts(prev => ({ ...prev, [gigId]: true }));
       } else if (response.data.message.includes("removed")) {

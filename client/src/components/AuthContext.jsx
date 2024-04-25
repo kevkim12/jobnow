@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log('Current user ID:', userId);
   }, [userId]);
 
   const login = (id) => {
