@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
-import Navbar from './components/layout/navbar'
-import Home from './components/home'
-import Gigs from './components/gigs'
+import Navbar from './components/layout/Navbar'
+import Home from './components/Home'
+import Gigs from './components/Gigs'
 import JobList from './components/JobList'
-import Login from './components/login'
-import Signup from './components/signup'
-import Footer from './components/layout/footer'
+import Login from './components/Login'
+import Signup from './components/Signup'
+import Footer from './components/layout/Footer'
 import RegistrationSuccessful from './components/RegistrationSuccessful'
 
 import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom'
