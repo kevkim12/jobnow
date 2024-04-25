@@ -113,6 +113,25 @@ def check_gig():
             return jsonify({"saved": False}), 200
     except Exception as e:
         return jsonify({"error": "Server error", "details": str(e)}), 500
+    
+@app.route('/load_saved', methods=['GET'])
+def load_saved():
+    user_id = request.args.get('user_id')
+    if not user_id:
+        return jsonify({"error": "Missing user_id"}), 400
+    
+    db = get_db()
+    cursor = db.cursor()
+    try:
+        cursor.execute("""
+            SELECT gigs.* FROM gigs
+            JOIN saved_gigs ON gigs.id = saved_gigs.gig_id
+            WHERE saved_gigs.user_id = ?
+        """, (user_id,))
+        saved_gigs = cursor.fetchall()
+        return jsonify([dict(gig) for gig in saved_gigs]), 200
+    except Exception as e:
+        return jsonify({"error": "Server error", "details": str(e)}), 500
 
 
 if __name__ == '__main__':
