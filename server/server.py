@@ -45,7 +45,7 @@ def login():
                    (data['email'], data['password']))
     user = cursor.fetchone()
     if user:
-        return jsonify({"message": "Login successful", "user": dict(user)}), 200
+        return jsonify({"message": "Login successful", "user_id": user['id']}), 200
     return jsonify({"error": "Invalid credentials"}), 401
 
 @app.route('/gigs', methods=['POST'])

@@ -27,8 +27,8 @@ export default function Login() {
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
-      console.log(response.data.message);
-      login();
+      console.log(response.data.user_id);
+      login(response.data.user_id);
       navigate('/');
     } catch (error) {
       const errorMessage = error.response ? error.response.data.error : 'Login failed';
