@@ -64,22 +64,56 @@ def get_gigs():
     cursor = db.cursor()
     cursor.execute("SELECT * FROM gigs")
     gigs = cursor.fetchall()
+    print(gigs)
     return jsonify([dict(gig) for gig in gigs]), 200
 
 @app.route('/save_gig', methods=['POST'])
 def save_gig():
     db = get_db()
     data = request.json
+    user_id = data['userId']
+    gig_id = data['gigId']
     cursor = db.cursor()
+    
+    cursor.execute("SELECT * FROM saved_gigs WHERE user_id = ? AND gig_id = ?", (user_id, gig_id))
+    existing = cursor.fetchone()
+    
     try:
-        cursor.execute("INSERT INTO saved_gigs (user_id, gig_id) VALUES (?, ?)",
-                       (data['user_id'], data['gig_id']))
-        db.commit()
-        return jsonify({"message": "Gig saved successfully"}), 201
+        if existing:
+            cursor.execute("DELETE FROM saved_gigs WHERE user_id = ? AND gig_id = ?", (user_id, gig_id))
+            db.commit()
+            return jsonify({"message": "Bookmark removed"}), 200
+        else:
+            cursor.execute("INSERT INTO saved_gigs (user_id, gig_id) VALUES (?, ?)", (user_id, gig_id))
+            db.commit()
+            return jsonify({"message": "Bookmark added"}), 201
     except sqlite3.IntegrityError as e:
+        db.rollback()
         return jsonify({"error": str(e)}), 400
     except Exception as e:
+        db.rollback()
         return jsonify({"error": "Server error", "details": str(e)}), 500
+    
+@app.route('/saved_gigs', methods=['GET'])
+def check_gig():
+    user_id = request.args.get('user_id')
+    gig_id = request.args.get('gig_id')
+    
+    if not user_id or not gig_id:
+        return jsonify({"error": "Missing user_id or gig_id"}), 400
+
+    db = get_db()
+    cursor = db.cursor()
+    try:
+        cursor.execute("SELECT 1 FROM saved_gigs WHERE user_id = ? AND gig_id = ?", (user_id, gig_id))
+        is_saved = cursor.fetchone()
+        if is_saved:
+            return jsonify({"saved": True}), 200
+        else:
+            return jsonify({"saved": False}), 200
+    except Exception as e:
+        return jsonify({"error": "Server error", "details": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
