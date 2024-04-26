@@ -1,10 +1,10 @@
-import {useAuth} from "./AuthContext.jsx";
-import {DollarOutlined, EnvironmentOutlined, SearchOutlined} from "@ant-design/icons";
-import {useEffect, useState} from "react";
+import { DollarOutlined, EnvironmentOutlined, SearchOutlined } from "@ant-design/icons";
+import { Card, Divider } from "antd";
 import axios from "axios";
-import {Card, Divider} from "antd";
+import { useEffect, useState } from "react";
+import { useAuth } from "./AuthContext";
 
-export default function Saved(){
+export default function Saved() {
     const { userId, isLoggedIn } = useAuth();
     const [input, setInput] = useState("");
     const [filteredPosts, setFilteredPosts] = useState([]);
@@ -92,7 +92,7 @@ export default function Saved(){
             <div
                 className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
                 <div className="ml-4 flex gap-1 items-center">
-                    <SearchOutlined/>
+                    <SearchOutlined />
                     <input
                         type="text"
                         placeholder="Search Gigs"
@@ -115,7 +115,7 @@ export default function Saved(){
                             <h1 className="text-2xl font-semibold">Name: {post.name}</h1>
                             {isLoggedIn && (
                                 <button id={post.id} className=" bg-theme text-white p-2 rounded-md"
-                                        onClick={() => bookmarkPost(post.id)}>
+                                    onClick={() => bookmarkPost(post.id)}>
                                     {bookmarkedPosts[post.id] ? (
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -123,8 +123,8 @@ export default function Saved(){
                                             fill="currentColor"
                                             className="w-6 h-6">
                                             <path fillRule="evenodd"
-                                                  d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
-                                                  clipRule="evenodd"/>
+                                                d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                                                clipRule="evenodd" />
                                         </svg>
                                     ) : (
                                         <svg
@@ -135,7 +135,7 @@ export default function Saved(){
                                             stroke="currentColor"
                                             className="w-6 h-6">
                                             <path strokeLinecap="round" strokeLinejoin="round"
-                                                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"/>
+                                                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                                         </svg>)}
                                 </button>
                             )}
@@ -143,8 +143,8 @@ export default function Saved(){
 
                         <Divider></Divider>
                         <p className="text-xl mb-2">Subject: {post.subject}</p>
-                        <p className="text-xl mb-2">Location: <span><EnvironmentOutlined/></span> {post.location}</p>
-                        <p className="text-xl mb-2">Price: <span><DollarOutlined/></span> {post.price}</p>
+                        <p className="text-xl mb-2">Location: <span><EnvironmentOutlined /></span> {post.location}</p>
+                        <p className="text-xl mb-2">Price: <span><DollarOutlined /></span> {post.price}</p>
                         <p className="text-xl mb-2">Description:</p>
                         <p className="text-lg pl-5">{post.description}</p>
                     </Card>
