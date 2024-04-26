@@ -141,7 +141,7 @@ export default function Gigs() {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center">
+    <div className="h-fit flex flex-col items-center" style={{ height: "86.7vh" }}>
       <div className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
         <div className="ml-4 flex gap-1 items-center">
           <SearchOutlined />
