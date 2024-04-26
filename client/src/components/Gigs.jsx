@@ -164,7 +164,7 @@ export default function Gigs() {
 
       <Modal
         title="Create New Post"
-        visible={isModalOpen}
+        open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         className="text-center underline underline-offset-4"
         footer={[

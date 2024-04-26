@@ -1,6 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { useState } from "react";
-import JobTile from "./JobTile.jsx";
+import JobTile from "./JobTile";
 
 export default function JobList() {
     const [jobs, setJobs] = useState([]);
@@ -33,8 +33,7 @@ export default function JobList() {
                     <div className="ml-4 flex gap-1 items-center">
                         <SearchOutlined />
                         <input
-                            type="text"
-                            value={searchQuery}
+                            type="text" value={searchQuery}
                             onChange={handleSearchInputChange}
                             placeholder="Search Jobs"
                             className="text-lg p-2 focus:outline-none"
