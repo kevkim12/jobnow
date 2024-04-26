@@ -28,39 +28,40 @@ export default function JobList() {
 
     return (
         <>
-            <div className="h-screen flex flex-col items-center">
-                <div className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
-                    <div className="ml-4 flex gap-1 items-center">
-                        <SearchOutlined />
-                        <input
-                            type="text" value={searchQuery}
-                            onChange={handleSearchInputChange}
-                            placeholder="Search Jobs"
-                            className="text-lg p-2 focus:outline-none"
-                        />
-                    </div>
-                    <button onClick={handleSearchButtonClick} className="bg-theme text-m mr-4 rounded-lg p-2 text-white font-medium">Search</button>
-                </div>
-                <div className="w-1/2 mt-10 mb-10 gap-4 overflow-auto">
-                    {loading ? (
-                        <h1>Loading...</h1>
-                    ) : (
-                        jobs.map((job) => (
-                            <JobTile
-                                key={job.job_id}
-                                name={job.employer_name}
-                                logo={job.employer_logo}
-                                apply={job.job_apply_link}
-                                jobType={job.job_employment_type}
-                                jobTitle={job.job_title}
-                                city={job.job_city}
-                                state={job.job_state}
-                                country={job.job_country}
-                            />
-                        ))
-                    )}
-                </div>
+        <div className="h-fit flex flex-col items-center" style={{ height: "86.7vh" }}>
+            <div className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
+                <div className="ml-4 flex gap-1 items-center">
+                <SearchOutlined/>
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    placeholder="Search Jobs"
+                    className="text-lg p-2 focus:outline-none"
+                />
             </div>
+            <button onClick={handleSearchButtonClick} className="bg-theme text-m mr-4 rounded-lg p-2 text-white font-medium">Search</button>
+        </div>
+            <div className="w-1/2 mt-10 mb-10 gap-4 overflow-auto">
+                {loading ? (
+                    <h1>Loading...</h1>
+                ) : (
+                    jobs.map((job) => (
+                        <JobTile
+                            key={job.job_id}
+                            name={job.employer_name}
+                            logo={job.employer_logo}
+                            apply={job.job_apply_link}
+                            jobType = {job.job_employment_type}
+                            jobTitle = {job.job_title}
+                            city = {job.job_city}
+                            state = {job.job_state}
+                            country = {job.job_country}
+                        />
+                    ))
+                )}
+            </div>
+        </div>
         </>
     );
 }
