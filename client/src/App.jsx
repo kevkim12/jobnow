@@ -8,6 +8,8 @@ import Navbar from './components/layout/Navbar'
 import Login from './components/Login'
 import RegistrationSuccessful from './components/RegistrationSuccessful'
 import Signup from './components/Signup'
+import Saved from './components/Saved.jsx'
+
 
 function Root() {
   return (
@@ -19,6 +21,7 @@ function Root() {
           <Route path="/gigs/*" element={<Gigs />} />
           <Route path="/jobs/*" element={<JobList />} />
           <Route path="/login/*" element={<Login />} />
+          <Route path="/saved/*" element={<Saved />} />
           <Route path="/signup/*" element={<Signup />} />
           <Route path="/registration-successful/*" element={<RegistrationSuccessful />} />
         </Routes>
