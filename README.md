@@ -20,7 +20,7 @@ In the terminal window, navigate to the `client` folder, and run `npm install` t
 
 In another new terminal window, navigate to the `server` folder, and run `python server.py` or `python3 server.py` to start the backend server.
 
-## Technologies & Frameoworks Used
+## Technologies & Frameworks Used
 - React.js
 - Flask
 - MySQL
