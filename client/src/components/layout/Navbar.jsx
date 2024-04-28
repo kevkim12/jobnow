@@ -1,10 +1,14 @@
+// Worked on by Kevin Kim
+
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { useAuth } from '../AuthContext';
 
 export default function Navbar() {
+  // Calls the useAuth hook to access the login status and logout function
   const { isLoggedIn, logout } = useAuth();
 
+  // Returns the Navbar component. It displays a logo on the left and navigation links on the right.
   return (
     <div className="flex justify-between items-center p-4 bg-black w-full">
       <img src={logo} alt="logo" className="w-1/12 pl-3" />

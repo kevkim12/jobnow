@@ -1,3 +1,14 @@
+// Worked on by Kevin Kim
+
+/*
+This page handles the signup process for the user. It uses the Ant Design library
+to create the form and input fields for the user to input their name, email, and password.
+The user can then submit the form to signup through axios which communicates with the
+Flask backend which handles the database. If the signup is successful, the user is
+redirected to the registration successful page. If the signup fails, an error message
+is displayed to the user.
+*/
+
 import { UserAddOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input } from 'antd';
 import axios from 'axios';
@@ -15,6 +26,7 @@ export default function Signup() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  // Sends a POST request to the server (Flask backend) to sign up the user. If successful, the user is redirected to the registration successful page
   const handleSignup = async (values) => {
     const { name, email, password } = values;
 
@@ -28,6 +40,7 @@ export default function Signup() {
     }
   };
 
+  // Returns the signup form which uses the content above to handle the signup process
   return (
     <div className="h-screen flex flex-col justify-center items-center w-full">
       <Card className="w-1/3 border-black rounded-xl shadow-2xl">
