@@ -8,7 +8,7 @@ import Navbar from './components/layout/Navbar'
 import Login from './components/Login'
 import RegistrationSuccessful from './components/RegistrationSuccessful'
 import Signup from './components/Signup'
-import Saved from './components/Saved.jsx'
+import Saved from './components/Saved'
 
 
 function Root() {
