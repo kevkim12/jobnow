@@ -1,4 +1,4 @@
-// Worked on by Kevin Kim
+// Worked on by Kevin Kim and Lawrence Li
 
 /*
 This page handles the signup process for the user. It uses the Ant Design library

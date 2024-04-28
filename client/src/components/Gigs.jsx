@@ -1,7 +1,12 @@
 // Worked on by Lawrence Li
 
 /*
-This page displays all the gigs that are available for users to view. It uses the Ant Design library. The page displays all the gigs that are available for users to view. Users can search for gigs using the search bar, create a new post, and bookmark posts. The page fetches all the gigs from the server and displays them. Users can also click on the bookmark button to save a gig. The page also displays the name, subject, location, price, and description of each gig. The page uses the AuthContext to check if the user is logged in and displays the bookmark button accordingly.
+This page displays all the gigs that are available for users to view. 
+It uses the Ant Design library. The page displays all the gigs that are available for users to view. 
+Users can search for gigs using the search bar, create a new post, and bookmark posts. 
+The page fetches all the gigs from the server and displays them. Users can also click on the bookmark button to save a gig. 
+The page also displays the name, subject, location, price, and description of each gig. 
+The page uses the AuthContext to check if the user is logged in and displays the bookmark button accordingly.
 */
 
 import { DollarOutlined, EnvironmentOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
