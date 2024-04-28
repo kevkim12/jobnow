@@ -1,3 +1,9 @@
+// Worked on by Lawrence Li
+
+/*
+This page displays all the gigs that are available for users to view. It uses the Ant Design library. The page displays all the gigs that are available for users to view. Users can search for gigs using the search bar, create a new post, and bookmark posts. The page fetches all the gigs from the server and displays them. Users can also click on the bookmark button to save a gig. The page also displays the name, subject, location, price, and description of each gig. The page uses the AuthContext to check if the user is logged in and displays the bookmark button accordingly.
+*/
+
 import { DollarOutlined, EnvironmentOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Card, Divider, Modal, message } from 'antd';
 import axios from 'axios';
@@ -18,17 +24,20 @@ export default function Gigs() {
   const { userId, isLoggedIn } = useAuth();
   const [bookmarkedPosts, setBookmarkedPosts] = useState({});
 
+  // Fetches bookmark status for each post
   const fetchBookmarkStatus = async (post) => {
     const isBookmarked = await checkIfBookmarked(post.id, userId);
     setBookmarkedPosts(prev => ({ ...prev, [post.id]: isBookmarked }));
   };
 
+  // Fetches bookmark status for all posts when posts state changes
   useEffect(() => {
     posts.forEach(post => {
       fetchBookmarkStatus(post);
     });
   }, [posts]);
 
+  // Loads saved posts from local storage
   useEffect(() => {
     const savedPosts = JSON.parse(localStorage.getItem("posts"));
     if (savedPosts) {
@@ -37,11 +46,13 @@ export default function Gigs() {
     }
   }, []);
 
+  // Updates local storage and filters posts when posts state changes
   useEffect(() => {
     localStorage.setItem("posts", JSON.stringify(posts));
     setFilteredPosts(posts);
   }, [posts]);
 
+  // Fetches all posts from the server
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -56,26 +67,32 @@ export default function Gigs() {
     fetchPosts();
   }, []);
 
+  // Sets the name state to the value of the input field to be submitted through axios later
   const handleNameChange = (e) => {
     setName(e.target.value);
   }
 
+  // Sets the subject state to the value of the input field to be submitted through axios later
   const handleSubjectChange = (e) => {
     setSubject(e.target.value);
   };
 
+  // Sets the description state to the value of the input field to be submitted through axios later
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
 
+  // Sets the location state to the value of the input field to be submitted through axios later
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
   };
 
+  // Sets the price state to the value of the input field to be submitted through axios later
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
   };
 
+  // Handles form submission for creating a new post and returns an error message if any fields are empty
   const handleSubmit = async () => {
     if (!name.trim() || !subject.trim() || !location.trim() || !description.trim() || !price.trim()) {
       message.error("Please fill in all fields.");
@@ -105,6 +122,7 @@ export default function Gigs() {
     }
   };
 
+  // Bookmarks a specific post
   const bookmarkPost = async (gigId) => {
     try {
       const response = await axios.post("http://127.0.0.1:5000/save_gig", { userId, gigId });
@@ -118,6 +136,7 @@ export default function Gigs() {
     }
   };
 
+  // Checks if a specific post is bookmarked or not
   const checkIfBookmarked = async (gigId, userId) => {
     try {
       const response = await axios.get(`http://127.0.0.1:5000/saved_gigs?user_id=${userId}&gig_id=${gigId}`);
@@ -128,6 +147,7 @@ export default function Gigs() {
     }
   }
 
+  // Handles search based on input value and keywords in posts
   const handleSearch = () => {
     const keyword = input.trim().toLowerCase();
     const filtered = posts.filter(post =>
@@ -140,6 +160,7 @@ export default function Gigs() {
     setFilteredPosts(filtered);
   };
 
+  // Returns the UI for the Gigs page
   return (
     <div className='h-86.7 overflow-auto'>
       <div className="h-fit flex flex-col items-center">
