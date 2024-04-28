@@ -30,6 +30,9 @@ In another new terminal window, navigate to the `server` folder, and run `python
 - Ant Design
 - Vite
 
+## API Used
+- JSearch
+
 
 
 
