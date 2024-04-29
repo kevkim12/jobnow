@@ -172,7 +172,7 @@ export default function Gigs() {
 
   // Returns the UI for the Gigs page
   return (
-    <div className='h-86.7 overflow-auto'>
+    <div className='h-100 overflow-auto'>
       <div className="h-fit flex flex-col items-center">
         <div className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
           <div className="w-full ml-4 flex gap-1 items-center">
