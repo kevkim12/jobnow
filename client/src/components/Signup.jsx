@@ -18,10 +18,10 @@ import { validateEmail, validateName, validatePassword } from '../utility/Valida
 import { useAuth } from './AuthContext';
 
 export default function Signup() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 

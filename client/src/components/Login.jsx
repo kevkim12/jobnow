@@ -20,9 +20,9 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [invalidPassword, setInvalidPassword] = useState(false);
 
   // Sets the email state to the value of the input field to be submitted through axios later
@@ -42,11 +42,13 @@ export default function Login() {
     try {
       const response = await axios.post("http://127.0.0.1:5000/login", { email, password });
       login(response.data.user_id);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       const errorMessage = error.response ? error.response.data.error : "Login failed";
       console.error(errorMessage);
       setError(errorMessage);
+
+      // This will make the visibility of the error message visible to the user
       setInvalidPassword(true);
     }
   };
