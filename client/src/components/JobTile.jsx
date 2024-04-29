@@ -1,7 +1,7 @@
 // Worked on by Alvis Zou
 /* This is the component that formats how the job postings are displayed in JobList.jsx */
 
-import { Button } from 'antd';
+import { Button } from "antd";
 
 export default function JobTile(job) {
     return (

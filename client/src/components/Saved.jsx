@@ -1,7 +1,7 @@
 //Component worked on by Mohamed Dirie
 
 import { DollarOutlined, EnvironmentOutlined, SearchOutlined } from "@ant-design/icons";
-import { Card, Divider } from "antd";
+import { Card, Divider, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
@@ -94,6 +94,11 @@ export default function Saved() {
             post.description.toLowerCase().includes(keyword) ||
             post.price.toLowerCase().includes(keyword)
         );
+
+        if (filtered.length === 0) {
+            message.error("No results found.");
+        }
+
         setFilteredPosts(filtered);
     };
 
@@ -103,14 +108,14 @@ export default function Saved() {
             <div className="h-fit flex flex-col items-center">
                 <div
                     className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
-                    <div className="ml-4 flex gap-1 items-center">
+                    <div className="w-full ml-4 flex gap-1 items-center">
                         <SearchOutlined />
                         <input
                             type="text"
                             placeholder="Search Gigs"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            className="text-lg p-2 focus:outline-none"
+                            className="w-full text-lg p-2 focus:outline-none"
                         />
                     </div>
                     <button onClick={handleSearch} className="bg-theme text-m mr-4 rounded-lg p-2 text-white font-medium">
