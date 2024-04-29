@@ -18,7 +18,7 @@ In the terminal window, navigate to the `client` folder, and run `npm install` t
 
 ### Server
 
-In another new terminal window, navigate to the `server` folder, and run `python server.py` or `python3 server.py` to start the backend server.
+In another new terminal window, navigate to the `server` folder. Run `python init.py` to initialize the database and run `python server.py` to start the backend server. You may have to use `python3` if the `python` command does not work.
 
 ## Technologies & Frameworks Used
 - React.js
