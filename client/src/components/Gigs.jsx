@@ -162,6 +162,11 @@ export default function Gigs() {
       post.description.toLowerCase().includes(keyword) ||
       post.price.toLowerCase().includes(keyword)
     );
+
+    if (filtered.length === 0) {
+      message.error("No results found.");
+    }
+
     setFilteredPosts(filtered);
   };
 

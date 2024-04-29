@@ -4,7 +4,8 @@ This page is a page where users can search for jobs and fetches job postings fro
 It will display the company's name, job title, whether it is full time or part time, and the location. If users want to apply to a specific job, there is an apply button that will redirect
 them to the site where they can apply. 
 */
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined } from "@ant-design/icons";
+import { message } from "antd";
 import { useState } from "react";
 import JobTile from "./JobTile";
 
@@ -27,6 +28,8 @@ export default function JobList() {
     const handleSearchButtonClick = () => {
         if (searchQuery.trim() !== "") {
             fetchData();
+        } else {
+            message.error("Please enter a search query.");
         }
     };
     // Function that takes care of when the user updates their search. 
@@ -55,7 +58,7 @@ export default function JobList() {
                 {/*Job postings */}
                 <div className="w-1/2 mt-10 mb-10 gap-4">
                     {loading ? (
-                        <h1>Loading...</h1>
+                        <h1 className="text-center">Loading...</h1>
                     ) : (
                         jobs.map((job) => (
                             <JobTile
