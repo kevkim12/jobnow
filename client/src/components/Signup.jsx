@@ -43,7 +43,7 @@ export default function Signup() {
   return (
     <div className="h-screen flex flex-col justify-center items-center w-full">
       <Card className="w-1/3 border-black rounded-xl shadow-2xl">
-        <h1 className="text-center text-3xl mb-5 text-black">Sign Up</h1>
+        <h1 className="text-center text-3xl mb-2 text-black">Sign Up</h1>
         <h1 className="text-center mb-4 text-lg">Just a few quick things to get started!</h1>
         <Form
           name="basic"
