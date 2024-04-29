@@ -170,14 +170,14 @@ export default function Gigs() {
     <div className='h-86.7 overflow-auto'>
       <div className="h-fit flex flex-col items-center">
         <div className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
-          <div className="ml-4 flex gap-1 items-center">
+          <div className="w-full ml-4 flex gap-1 items-center">
             <SearchOutlined />
             <input
               type="text"
               placeholder="Search Gigs"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="text-lg p-2 focus:outline-none"
+              className="w-full text-lg p-2 focus:outline-none"
             />
           </div>
           <button onClick={handleSearch} className="bg-theme text-m mr-4 rounded-lg p-2 text-white font-medium">

@@ -39,14 +39,14 @@ export default function JobList() {
             <div className="h-fit flex flex-col items-center">
                 <div className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
                     {/*Search bar */}
-                    <div className="ml-4 flex gap-1 items-center">
+                    <div className="w-full ml-4 flex gap-1 items-center">
                         <SearchOutlined />
                         <input
                             type="text"
                             value={searchQuery}
                             onChange={handleSearchInputChange}
                             placeholder="Search Jobs"
-                            className="text-lg p-2 focus:outline-none"
+                            className="w-full text-lg p-2 focus:outline-none"
                         />
                     </div>
                     {/*Search button */}
