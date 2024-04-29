@@ -1,3 +1,5 @@
+//Component worked on by Mohamed Dirie
+
 import { DollarOutlined, EnvironmentOutlined, SearchOutlined } from "@ant-design/icons";
 import { Card, Divider } from "antd";
 import axios from "axios";
