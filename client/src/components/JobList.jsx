@@ -48,7 +48,7 @@ export default function JobList() {
                             type="text"
                             value={searchQuery}
                             onChange={handleSearchInputChange}
-                            placeholder="Search Jobs"
+                            placeholder="Search for jobs..."
                             className="w-full text-lg p-2 focus:outline-none"
                         />
                     </div>

@@ -112,7 +112,7 @@ export default function Saved() {
                         <SearchOutlined />
                         <input
                             type="text"
-                            placeholder="Search Gigs"
+                            placeholder="Search for saved gigs..."
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             className="w-full text-lg p-2 focus:outline-none"

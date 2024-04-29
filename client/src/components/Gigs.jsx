@@ -179,7 +179,7 @@ export default function Gigs() {
             <SearchOutlined />
             <input
               type="text"
-              placeholder="Search Gigs"
+              placeholder="Search for gigs..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               className="w-full text-lg p-2 focus:outline-none"
