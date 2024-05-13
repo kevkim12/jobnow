@@ -6,6 +6,7 @@ It uses tailwind CSS for styling and NavLink for links.
 */
 
 import { NavLink } from 'react-router-dom';
+import Footer from './layout/Footer';
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
           </NavLink>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

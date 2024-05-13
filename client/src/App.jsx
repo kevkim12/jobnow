@@ -3,13 +3,11 @@ import { AuthProvider } from './components/AuthContext'
 import Gigs from './components/Gigs'
 import Home from './components/Home'
 import JobList from './components/JobList'
-import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import Login from './components/Login'
 import RegistrationSuccessful from './components/RegistrationSuccessful'
-import Signup from './components/Signup'
 import Saved from './components/Saved'
-
+import Signup from './components/Signup'
 
 function Root() {
   return (
@@ -25,7 +23,6 @@ function Root() {
           <Route path="/signup/*" element={<Signup />} />
           <Route path="/registration-successful/*" element={<RegistrationSuccessful />} />
         </Routes>
-        <Footer />
       </AuthProvider>
     </>
   );

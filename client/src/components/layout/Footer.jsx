@@ -9,7 +9,7 @@ export default function Footer() {
     return (
         // Displays the current year and copyright claims
         <p className="text-lg text-white text-center bg-black bottom-0 w-full">
-            &copy; {new Date().getFullYear()} CS391 Team. All Rights Reserved.
+            &copy; {new Date().getFullYear()} JobNow. All Rights Reserved.
         </p>
     );
 }
