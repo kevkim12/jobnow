@@ -1,14 +1,9 @@
-# Worked on by Kevin Kim
-
-# This is a simple file that is used to create the database and tables for the server.
-
 import sqlite3
 
 def create_db():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
 
-    # These commands are used to create the tables for the database.
     c.execute('''
         DROP TABLE IF EXISTS users;
     ''')
@@ -48,7 +43,6 @@ def create_db():
         );
     ''')
 
-    # This command is used to commit the changes to the database. The next command closes the connection to the database.
     conn.commit()
     conn.close()
 

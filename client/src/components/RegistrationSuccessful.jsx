@@ -1,11 +1,3 @@
-// Worked on by Kevin Kim
-
-/*
-This page is displayed when the user successfully registers an account.
-It does not use anything complex and simply displays a confirmation message
-to the user.
-*/
-
 export default function RegistrationSuccessful() {
   return (
     <div className="bg-green-100 min-h-screen flex items-center justify-center">
