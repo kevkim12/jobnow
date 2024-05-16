@@ -15,7 +15,7 @@ def create_db():
             password TEXT NOT NULL
         );
     ''')
-    
+
     c.execute('''
         DROP TABLE IF EXISTS gigs;
     ''')

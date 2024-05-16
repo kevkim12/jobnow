@@ -1,17 +1,21 @@
+import os
 from flask import Flask, request, jsonify, g
 import sqlite3
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-app.secret_key = "yuumiistheworstchampiontoeverexist"
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
-DATABASE = "database.db"
+DATABASE = os.getenv("DATABASE_URL", "sqlite:///database.db")
 
 def get_db():
     db = getattr(g, "_database", None)
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
+        db = g._database = sqlite3.connect(DATABASE.split("///")[-1])
     db.row_factory = sqlite3.Row
     return db
 
@@ -24,11 +28,11 @@ def close_connection(exception):
 @app.route("/signup", methods=["POST"])
 def signup():
     db = get_db()
-    data = request.json 
+    data = request.json
     cursor = db.cursor()
     try:
-        cursor.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", 
-                       (data["name"], data["email"], data["password"]))
+        cursor.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+                    (data["name"], data["email"], data["password"]))
         db.commit()
         return jsonify({"message": "User created successfully"}), 201
     except sqlite3.IntegrityError as e:
@@ -42,7 +46,7 @@ def login():
     data = request.json
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users WHERE email = ? AND password = ?", 
-                   (data["email"], data["password"]))
+                (data["email"], data["password"]))
     user = cursor.fetchone()
     if user:
         return jsonify({"message": "Login successful", "user_id": user["id"]}), 200
@@ -54,7 +58,7 @@ def create_gig():
     data = request.json
     cursor = db.cursor()
     cursor.execute("INSERT INTO gigs (name, subject, location, description, price) VALUES (?, ?, ?, ?, ?)",
-                   (data["name"], data["subject"], data["location"], data["description"], data["price"]))
+                (data["name"], data["subject"], data["location"], data["description"], data["price"]))
     db.commit()
     return jsonify({"message": "Gig created successfully"}), 201
 
@@ -74,10 +78,10 @@ def save_gig():
     user_id = data["userId"]
     gig_id = data["gigId"]
     cursor = db.cursor()
-    
+
     cursor.execute("SELECT * FROM saved_gigs WHERE user_id = ? AND gig_id = ?", (user_id, gig_id))
     existing = cursor.fetchone()
-    
+
     try:
         if existing:
             cursor.execute("DELETE FROM saved_gigs WHERE user_id = ? AND gig_id = ?", (user_id, gig_id))
@@ -93,12 +97,12 @@ def save_gig():
     except Exception as e:
         db.rollback()
         return jsonify({"error": "Server error", "details": str(e)}), 500
-    
+
 @app.route("/saved_gigs", methods=["GET"])
 def check_gig():
     user_id = request.args.get("user_id")
     gig_id = request.args.get("gig_id")
-    
+
     if not user_id or not gig_id:
         return jsonify({"error": "Missing user_id or gig_id"}), 400
 
@@ -113,13 +117,13 @@ def check_gig():
             return jsonify({"saved": False}), 200
     except Exception as e:
         return jsonify({"error": "Server error", "details": str(e)}), 500
-    
+
 @app.route("/load_saved", methods=["GET"])
 def load_saved():
     user_id = request.args.get("user_id")
     if not user_id:
         return jsonify({"error": "Missing user_id"}), 400
-    
+
     db = get_db()
     cursor = db.cursor()
     try:
