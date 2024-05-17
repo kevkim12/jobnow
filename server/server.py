@@ -10,7 +10,8 @@ app = Flask(__name__)
 CORS(app)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
-DATABASE = os.getenv("DATABASE_URL", "sqlite:///database.db")
+database_url = os.getenv("DATABASE_URL", "sqlite:///database.db")
+DATABASE = database_url.split("sqlite:///")[-1]
 
 def get_db():
     db = getattr(g, "_database", None)
