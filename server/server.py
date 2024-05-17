@@ -37,7 +37,7 @@ def signup():
     cursor = db.cursor()
     try:
         cursor.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                       (data["name"], data["email"], data["password"]))
+                    (data["name"], data["email"], data["password"]))
         db.commit()
         return jsonify({"message": "User created successfully"}), 201
     except sqlite3.IntegrityError as e:
@@ -51,7 +51,7 @@ def login():
     data = request.json
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users WHERE email = ? AND password = ?",
-                   (data["email"], data["password"]))
+                (data["email"], data["password"]))
     user = cursor.fetchone()
     if user:
         return jsonify({"message": "Login successful", "user_id": user["id"]}), 200
@@ -63,7 +63,7 @@ def create_gig():
     data = request.json
     cursor = db.cursor()
     cursor.execute("INSERT INTO gigs (name, subject, location, description, price) VALUES (?, ?, ?, ?, ?)",
-                   (data["name"], data["subject"], data["location"], data["description"], data["price"]))
+                (data["name"], data["subject"], data["location"], data["description"], data["price"]))
     db.commit()
     return jsonify({"message": "Gig created successfully"}), 201
 

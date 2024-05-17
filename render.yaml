@@ -5,8 +5,7 @@ services:
     staticPublishPath: client/dist
     buildCommand: cd client && npm install && npm run build
     envVars:
-      - key: REACT_APP_API_URL
-        value: https://jobnow-backend.onrender.com
+      - key: VITE_API_KEY
 
   - type: web
     name: jobnow-server
