@@ -24,10 +24,18 @@ export default function Signup() {
       navigate("/registration-successful");
       return response.data;
     } catch (error) {
-      const errorMessage = error.response ? error.response.data.error : "Signup failed";
-      console.error(errorMessage);
-      setError(errorMessage);
+      if (error.response && error.response.status === 400) {
+        setError("Email already exists!");
+      } else {
+        const errorMessage = error.response ? error.response.data.error : "Signup failed";
+        console.error(errorMessage);
+        setError(errorMessage);
+      }
     }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
   };
 
   return (
@@ -36,9 +44,13 @@ export default function Signup() {
         <Card className="w-1/3 border-black rounded-xl shadow-2xl">
           <h1 className="text-center text-3xl mb-2 text-black">Sign Up</h1>
           <h1 className="text-center mb-4 text-lg">Just a few quick things to get started!</h1>
+          {error && (
+            <div className="text-red-600 text-center mb-2">{error}</div>
+          )}
           <Form
             name="basic"
             onFinish={handleSignup}
+            onFinishFailed={onFinishFailed}
             initialValues={{ remember: true }}
             autoComplete="off"
             layout="vertical"

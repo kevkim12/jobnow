@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__, static_folder='../client/dist', static_url_path='/')
+app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
@@ -140,14 +140,6 @@ def load_saved():
         return jsonify([dict(gig) for gig in saved_gigs]), 200
     except Exception as e:
         return jsonify({"error": "Server error", "details": str(e)}), 500
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve_react_app(path):
-    if path and app.static_folder + '/' + path != app.static_folder + '/index.html':
-        return app.send_static_file('index.html')
-    else:
-        return app.send_static_file(path)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
