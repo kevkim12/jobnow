@@ -11,12 +11,16 @@ CORS(app)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
 database_url = os.getenv("DATABASE_URL", "sqlite:///database.db")
-DATABASE = database_url.split("sqlite:///")[-1]
+
+if database_url.startswith("sqlite:///"):
+    DATABASE = database_url.split("sqlite:///")[-1]
+else:
+    raise ValueError("Currently, only SQLite database URLs are supported.")
 
 def get_db():
     db = getattr(g, "_database", None)
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE.split("///")[-1])
+        db = g._database = sqlite3.connect(DATABASE)
     db.row_factory = sqlite3.Row
     return db
 
@@ -33,7 +37,7 @@ def signup():
     cursor = db.cursor()
     try:
         cursor.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                    (data["name"], data["email"], data["password"]))
+                       (data["name"], data["email"], data["password"]))
         db.commit()
         return jsonify({"message": "User created successfully"}), 201
     except sqlite3.IntegrityError as e:
@@ -46,8 +50,8 @@ def login():
     db = get_db()
     data = request.json
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE email = ? AND password = ?", 
-                (data["email"], data["password"]))
+    cursor.execute("SELECT * FROM users WHERE email = ? AND password = ?",
+                   (data["email"], data["password"]))
     user = cursor.fetchone()
     if user:
         return jsonify({"message": "Login successful", "user_id": user["id"]}), 200
@@ -59,7 +63,7 @@ def create_gig():
     data = request.json
     cursor = db.cursor()
     cursor.execute("INSERT INTO gigs (name, subject, location, description, price) VALUES (?, ?, ?, ?, ?)",
-                (data["name"], data["subject"], data["location"], data["description"], data["price"]))
+                   (data["name"], data["subject"], data["location"], data["description"], data["price"]))
     db.commit()
     return jsonify({"message": "Gig created successfully"}), 201
 
@@ -69,7 +73,6 @@ def get_gigs():
     cursor = db.cursor()
     cursor.execute("SELECT * FROM gigs")
     gigs = cursor.fetchall()
-    print(gigs)
     return jsonify([dict(gig) for gig in gigs]), 200
 
 @app.route("/save_gig", methods=["POST"])
@@ -137,7 +140,6 @@ def load_saved():
         return jsonify([dict(gig) for gig in saved_gigs]), 200
     except Exception as e:
         return jsonify({"error": "Server error", "details": str(e)}), 500
-
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
