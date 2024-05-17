@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, g, send_from_directory
+from flask import Flask, request, jsonify, g
 import sqlite3
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -144,10 +144,10 @@ def load_saved():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react_app(path):
-    if path and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
+    if path and app.static_folder + '/' + path != app.static_folder + '/index.html':
+        return app.send_static_file('index.html')
     else:
-        return send_from_directory(app.static_folder, 'index.html')
+        return app.send_static_file(path)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
