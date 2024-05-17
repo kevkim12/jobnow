@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: jobnow-server
+    env: python
+    plan: free
+    buildCommand: "cd server && pip install -r requirements.txt"
+    startCommand: "cd server && gunicorn server:app"
+    envVars:
+      - key: FLASK_SECRET_KEY
+        fromDatabase: JOBNOW_FLASK_SECRET_KEY
+      - key: DATABASE_URL
+        fromDatabase: JOBNOW_DATABASE_URL
