@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
 database_url = os.getenv("DATABASE_URL", "sqlite:///database.db")

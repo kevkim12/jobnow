@@ -2,6 +2,7 @@ import { DollarOutlined, EnvironmentOutlined, SearchOutlined } from "@ant-design
 import { Card, Divider, Pagination, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import API_URL from "../config";
 import { useAuth } from "./AuthContext";
 import Footer from "./layout/Footer";
 
@@ -48,7 +49,7 @@ export default function Saved() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/load_saved?user_id=${userId}`, {
+                const response = await axios.get(`${API_URL}/load_saved?user_id=${userId}`, {
                     params: {
                         page: currentPage,
                         pageSize: pageSize,
@@ -68,7 +69,7 @@ export default function Saved() {
 
     const bookmarkPost = async (gigId) => {
         try {
-            const response = await axios.post("http://127.0.0.1:5000/save_gig", { userId, gigId });
+            const response = await axios.post(`${API_URL}/save_gig`, { userId, gigId });
             if (response.data.message.includes("added")) {
                 setBookmarkedPosts(prev => ({ ...prev, [gigId]: true }));
             } else if (response.data.message.includes("removed")) {
@@ -82,7 +83,7 @@ export default function Saved() {
 
     const checkIfBookmarked = async (gigId, userId) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/saved_gigs?user_id=${userId}&gig_id=${gigId}`);
+            const response = await axios.get(`${API_URL}/saved_gigs?user_id=${userId}&gig_id=${gigId}`);
             return response.data.saved;
         } catch (error) {
             console.error("Error checking if gig is bookmarked:", error);

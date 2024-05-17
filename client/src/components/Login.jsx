@@ -3,6 +3,7 @@ import { Button, Card, Form, Input } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 import { useAuth } from './AuthContext';
 import Footer from './layout/Footer';
 
@@ -27,7 +28,7 @@ export default function Login() {
     const { email, password } = values;
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/login", { email, password });
+      const response = await axios.post(`${API_URL}/login`, { email, password });
       login(response.data.user_id);
       navigate("/");
     } catch (error) {

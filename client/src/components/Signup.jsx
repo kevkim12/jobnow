@@ -3,6 +3,7 @@ import { Button, Card, Form, Input } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 import { validateEmail, validateName, validatePassword } from '../utility/Validation';
 import { useAuth } from './AuthContext';
 import Footer from './layout/Footer';
@@ -19,7 +20,7 @@ export default function Signup() {
     const { name, email, password } = values;
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/signup", { name, email, password });
+      const response = await axios.post(`${API_URL}/signup`, { name, email, password });
       navigate("/registration-successful");
       return response.data;
     } catch (error) {

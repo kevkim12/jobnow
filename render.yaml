@@ -1,10 +1,18 @@
 services:
   - type: web
+    name: jobnow-client
+    env: static
+    staticPublishPath: client/dist
+    buildCommand: cd client && npm install && npm run build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://jobnow-backend.onrender.com
+
+  - type: web
     name: jobnow-server
     env: python
-    plan: free
-    buildCommand: "cd server && pip install -r requirements.txt"
-    startCommand: "cd server && gunicorn server:app"
+    buildCommand: cd server && pip install -r requirements.txt
+    startCommand: cd server && gunicorn server:app
     envVars:
       - key: FLASK_SECRET_KEY
         fromDatabase: JOBNOW_FLASK_SECRET_KEY
