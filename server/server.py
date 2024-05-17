@@ -1,12 +1,12 @@
 import os
-from flask import Flask, request, jsonify, g
+from flask import Flask, request, jsonify, g, send_from_directory
 import sqlite3
 from flask_cors import CORS
 from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../client/dist', static_url_path='/')
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
@@ -140,6 +140,14 @@ def load_saved():
         return jsonify([dict(gig) for gig in saved_gigs]), 200
     except Exception as e:
         return jsonify({"error": "Server error", "details": str(e)}), 500
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_react_app(path):
+    if path and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
