@@ -35,7 +35,7 @@ export default function JobList() {
         <div>
             <div className='h-screen overflow-auto'>
                 <div className="h-fit flex flex-col items-center">
-                    <div className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
+                    <div className="lg:w-1/2 md:w-9/12 w-9/12 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
                         <div className="w-full ml-4 flex gap-1 items-center">
                             <SearchOutlined />
                             <input
@@ -53,7 +53,7 @@ export default function JobList() {
                         </div>
                         <button onClick={handleSearchButtonClick} className="bg-theme text-m mr-4 rounded-lg p-2 text-white font-medium">Search</button>
                     </div>
-                    <div className="w-1/2 mt-10 mb-10 gap-4">
+                    <div className="lg:w-1/2 md:w-10/12 w-9/12 mt-10 mb-10 gap-4">
                         {loading ? (
                             <h1 className="text-center">Loading...</h1>
                         ) : (

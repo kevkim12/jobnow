@@ -113,7 +113,7 @@ export default function Saved() {
             <div className="h-screen overflow-auto">
                 <div className="h-fit flex flex-col items-center">
                     <div
-                        className="w-1/2 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
+                        className="lg:w-1/2 md:w-9/12 w-9/12 flex items-center rounded-lg justify-between bg-white mt-5 border border-black shadow-lg h-14">
                         <div className="w-full ml-4 flex gap-1 items-center">
                             <SearchOutlined />
                             <input
@@ -134,7 +134,7 @@ export default function Saved() {
                         </button>
                     </div>
 
-                    <div className="w-1/2 mt-10 gap-4">
+                    <div className="lg:w-1/2 md:w-9/12 w-9/12 mt-10 gap-4">
                         {currentPosts.map((post, index) => (
                             <Card key={index} className="mb-4 border-black">
                                 <div className="flex justify-between items-center mb-2">

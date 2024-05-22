@@ -24,6 +24,9 @@ export default {
       height: {
         '80': '80vh',
       },
+      zIndex: {
+        '1000': '1000',
+      }
     }
   },
   plugins: [

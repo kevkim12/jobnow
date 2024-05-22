@@ -43,7 +43,7 @@ export default function Login() {
   return (
     <div>
       <div className="h-screen flex flex-col justify-center items-center w-full">
-        <Card className="w-1/3 border-black rounded-xl shadow-2xl">
+        <Card className="lg:w-1/3 md:w-1/2 w-3/4 border-black rounded-xl shadow-2xl">
           <h1 className="text-center text-3xl mb-2 text-black">Login</h1>
           <h1 className="text-center mb-4 text-lg">Hello, welcome back!</h1>
           <Form

@@ -2,7 +2,7 @@ import { Button } from "antd";
 
 export default function JobTile(job) {
     return (
-        <div className="bg-white rounded-lg shadow-md p-4 mb-4">
+        <div className="bg-white rounded-lg shadow-md p-4 mb-4 border border-black">
             <div className="flex items-center gap-16">
                 <img src={job.logo} alt={job.name} className="h-20 w-20 ml-4" />
                 <div>

@@ -41,7 +41,7 @@ export default function Signup() {
   return (
     <div>
       <div className="h-screen flex flex-col justify-center items-center w-full">
-        <Card className="w-1/3 border-black rounded-xl shadow-2xl">
+        <Card className="lg:w-1/3 md:w-1/2 w-3/4 border-black rounded-xl shadow-2xl">
           <h1 className="text-center text-3xl mb-2 text-black">Sign Up</h1>
           <h1 className="text-center mb-4 text-lg">Just a few quick things to get started!</h1>
           {error && (
@@ -70,7 +70,7 @@ export default function Signup() {
               name="email"
               rules={[
                 { required: true, message: "An email address is required." },
-                { validator: (_, value) => (validateEmail(value) ? Promise.resolve() : Promise.reject(new Error("Invalid email format"))) }
+                { validator: (_, value) => (validateEmail(value) ? Promise.resolve() : Promise.reject(new Error("Invalid email format."))) }
               ]}
             >
               <Input prefix={<MailOutlined />} placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -80,7 +80,7 @@ export default function Signup() {
               name="password"
               rules={[
                 { required: true, message: "A password is required." },
-                { validator: (_, value) => (validatePassword(value) ? Promise.resolve() : Promise.reject(new Error("Password must be at least 8 characters long and contain at least 1 digit, 1 uppercase, 1 lowercase character, and 1 special character"))) }
+                { validator: (_, value) => (validatePassword(value) ? Promise.resolve() : Promise.reject(new Error("Password must be at least 8 characters long and contain at least 1 digit, 1 uppercase, 1 lowercase character, and 1 special character."))) }
               ]}
             >
               <Input.Password prefix={<SafetyCertificateOutlined />} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
