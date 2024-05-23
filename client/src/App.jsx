@@ -1,13 +1,18 @@
-import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom'
-import { AuthProvider } from './components/AuthContext'
-import Gigs from './components/Gigs'
-import Home from './components/Home'
-import JobList from './components/JobList'
-import Navbar from './components/layout/Navbar'
-import Login from './components/Login'
-import RegistrationSuccessful from './components/RegistrationSuccessful'
-import Saved from './components/Saved'
-import Signup from './components/Signup'
+import {
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
+import { AuthProvider } from "./components/AuthContext";
+import Gigs from "./components/Gigs";
+import Home from "./components/Home";
+import JobList from "./components/JobList";
+import Navbar from "./components/layout/Navbar";
+import Login from "./components/Login";
+import RegistrationSuccessful from "./components/RegistrationSuccessful";
+import Saved from "./components/Saved";
+import Signup from "./components/Signup";
 
 function Root() {
   return (
@@ -21,21 +26,20 @@ function Root() {
           <Route path="/login/*" element={<Login />} />
           <Route path="/saved/*" element={<Saved />} />
           <Route path="/signup/*" element={<Signup />} />
-          <Route path="/registration-successful/*" element={<RegistrationSuccessful />} />
+          <Route
+            path="/registration-successful/*"
+            element={<RegistrationSuccessful />}
+          />
         </Routes>
       </AuthProvider>
     </>
   );
 }
 
-const router = createBrowserRouter(
-  [{ path: "*", Component: Root },]
-);
+const router = createBrowserRouter([{ path: "*", Component: Root }]);
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
