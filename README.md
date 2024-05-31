@@ -54,7 +54,7 @@ Then, run `python init.py` to initialize the database and run `python server.py`
 ## Technologies & Frameworks Used
 - React.js
 - Flask
-- MySQL
+- SQLite
 - JavaScript
 - Tailwind CSS
 - Python
