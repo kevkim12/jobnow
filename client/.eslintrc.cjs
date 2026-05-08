@@ -12,10 +12,14 @@ module.exports = {
   settings: { react: { version: "18.2" } },
   plugins: ["react-refresh"],
   rules: {
+    "react/prop-types": "off",
     "react/jsx-no-target-blank": "off",
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
-    ],
+    "react-refresh/only-export-components": "off",
   },
+  overrides: [
+    {
+      files: ["tailwind.config.js", "postcss.config.js"],
+      env: { node: true },
+    },
+  ],
 };

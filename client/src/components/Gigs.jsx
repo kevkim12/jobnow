@@ -1,14 +1,10 @@
-import {
-  DollarOutlined,
-  EnvironmentOutlined,
-  PlusOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
-import { Button, Card, Divider, Modal, Pagination, message } from "antd";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, Modal, Pagination, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import API_URL from "../config";
 import { useAuth } from "./AuthContext";
+import GigCard from "./GigCard";
 import Footer from "./layout/Footer";
 
 export default function Gigs() {
@@ -34,16 +30,44 @@ export default function Gigs() {
     setCurrentPage(page);
   };
 
-  const fetchBookmarkStatus = async (post) => {
-    const isBookmarked = await checkIfBookmarked(post.id, userId);
-    setBookmarkedPosts((prev) => ({ ...prev, [post.id]: isBookmarked }));
-  };
-
   useEffect(() => {
-    posts.forEach((post) => {
-      fetchBookmarkStatus(post);
-    });
-  }, [posts]);
+    if (!isLoggedIn || !userId) {
+      return;
+    }
+
+    let isCurrent = true;
+
+    const fetchBookmarkStatuses = async () => {
+      const entries = await Promise.all(
+        posts
+          .filter((post) => post.id)
+          .map(async (post) => {
+            try {
+              const response = await axios.get(
+                `${API_URL}/saved_gigs?user_id=${userId}&gig_id=${post.id}`
+              );
+              return [post.id, response.data.saved];
+            } catch (error) {
+              console.error("Error checking if gig is bookmarked:", error);
+              return [post.id, false];
+            }
+          })
+      );
+
+      if (isCurrent) {
+        setBookmarkedPosts((prev) => ({
+          ...prev,
+          ...Object.fromEntries(entries),
+        }));
+      }
+    };
+
+    fetchBookmarkStatuses();
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [posts, userId, isLoggedIn]);
 
   useEffect(() => {
     const savedPosts = JSON.parse(localStorage.getItem("posts"));
@@ -78,26 +102,6 @@ export default function Gigs() {
     fetchPosts();
   }, [currentPage]);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSubjectChange = (e) => {
-    setSubject(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleLocationChange = (e) => {
-    setLocation(e.target.value);
-  };
-
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value);
-  };
-
   const handleSubmit = async () => {
     if (
       !name.trim() ||
@@ -131,6 +135,7 @@ export default function Gigs() {
       setLocation("");
       setDescription("");
       setPrice("");
+      setError("");
       setIsModalOpen(false);
       return response.data;
     } catch (error) {
@@ -143,6 +148,10 @@ export default function Gigs() {
   };
 
   const bookmarkPost = async (gigId) => {
+    if (!gigId) {
+      return;
+    }
+
     try {
       const response = await axios.post(`${API_URL}/save_gig`, {
         userId,
@@ -161,27 +170,23 @@ export default function Gigs() {
     }
   };
 
-  const checkIfBookmarked = async (gigId, userId) => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/saved_gigs?user_id=${userId}&gig_id=${gigId}`
-      );
-      return response.data.saved;
-    } catch (error) {
-      console.error("Error checking if gig is bookmarked:", error);
-      return false;
-    }
-  };
-
   const handleSearch = () => {
     const keyword = input.trim().toLowerCase();
-    const filtered = posts.filter(
-      (post) =>
-        post.name.toLowerCase().includes(keyword) ||
-        post.subject.toLowerCase().includes(keyword) ||
-        post.location.toLowerCase().includes(keyword) ||
-        post.description.toLowerCase().includes(keyword) ||
-        post.price.toLowerCase().includes(keyword)
+
+    if (!keyword) {
+      setFilteredPosts(posts);
+      setCurrentPage(1);
+      return;
+    }
+
+    const filtered = posts.filter((post) =>
+      [
+        post.name,
+        post.subject,
+        post.location,
+        post.description,
+        post.price,
+      ].some((value) => String(value ?? "").toLowerCase().includes(keyword))
     );
 
     if (filtered.length === 0) {
@@ -189,88 +194,103 @@ export default function Gigs() {
     }
 
     setFilteredPosts(filtered);
+    setCurrentPage(1);
   };
 
   return (
-    <div>
-      <div className="h-screen overflow-auto">
-        <div className="flex flex-col items-center h-fit">
-          <div className="flex items-center justify-between w-9/12 mt-5 bg-white border border-black rounded-lg shadow-lg lg:w-1/2 md:w-9/12 h-14">
-            <div className="flex items-center w-full gap-1 ml-4">
-              <SearchOutlined />
-              <input
-                type="text"
-                placeholder="Search for gigs..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleSearch();
-                  }
-                }}
-                className="w-full p-2 text-lg focus:outline-none"
-              />
+    <div className="page-shell">
+      <main>
+        <section className="border-b border-slate-200 bg-white">
+          <div className="content-wrap py-12">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="eyebrow">Quick gigs</p>
+                <h1 className="mt-3 text-4xl font-black text-slate-950 sm:text-5xl">
+                  Find flexible work nearby.
+                </h1>
+                <p className="mt-4 text-lg leading-8 text-slate-600">
+                  Search one-off jobs, local tasks, and short projects posted
+                  by people who need help now.
+                </p>
+              </div>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setIsModalOpen(true)}
+                className="!h-12 !rounded-md !bg-teal-500 !px-5 !font-black !text-slate-950 hover:!bg-teal-400"
+              >
+                Create post
+              </Button>
             </div>
-            <button
-              onClick={handleSearch}
-              className="p-2 mr-4 font-medium text-white rounded-lg bg-theme text-m"
-            >
-              Search
-            </button>
+
+            <div className="search-panel mt-8">
+              <div className="flex min-h-12 flex-1 items-center gap-2 rounded-md bg-slate-50 px-3">
+                <SearchOutlined className="text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Search gigs by title, location, name, or price"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSearch();
+                    }
+                  }}
+                  className="search-input"
+                />
+              </div>
+              <button onClick={handleSearch} className="primary-action">
+                <SearchOutlined />
+                Search
+              </button>
+            </div>
           </div>
-          <div className="flex justify-center w-1/2 mt-5">
-            <Button
-              type="primary"
-              onClick={() => setIsModalOpen(true)}
-              className="flex items-center text-xl"
-            >
-              Create Post <PlusOutlined />
-            </Button>
-          </div>
-          <Modal
-            title="Create New Post"
-            open={isModalOpen}
-            onCancel={() => setIsModalOpen(false)}
-            className="text-center underline underline-offset-4"
-            footer={[
-              <Button key="cancel" onClick={() => setIsModalOpen(false)}>
-                Cancel
-              </Button>,
-              <Button key="submit" type="primary" onClick={handleSubmit}>
-                Create
-              </Button>,
-            ]}
-          >
+        </section>
+
+        <Modal
+          title="Create a gig"
+          open={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          footer={[
+            <Button key="cancel" onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </Button>,
+            <Button key="submit" type="primary" onClick={handleSubmit}>
+              Create
+            </Button>,
+          ]}
+        >
+          <div className="grid gap-3 pt-2">
             <input
               type="text"
-              placeholder="Full Name"
+              placeholder="Full name"
               value={name}
-              onChange={handleNameChange}
-              className="w-full p-2 mb-2 text-lg"
+              onChange={(e) => setName(e.target.value)}
+              className="field-input"
               required
             />
             <input
               type="text"
-              placeholder="Subject"
+              placeholder="Gig title"
               value={subject}
-              onChange={handleSubjectChange}
-              className="w-full p-2 mb-2 text-lg"
+              onChange={(e) => setSubject(e.target.value)}
+              className="field-input"
               required
             />
             <input
               type="text"
               placeholder="Location"
               value={location}
-              onChange={handleLocationChange}
-              className="w-full p-2 mb-2 text-lg"
+              onChange={(e) => setLocation(e.target.value)}
+              className="field-input"
               required
             />
             <input
               type="number"
               placeholder="Price"
               value={price}
-              onChange={handlePriceChange}
-              className="w-full p-2 mb-2 text-lg"
+              onChange={(e) => setPrice(e.target.value)}
+              className="field-input"
               pattern="[0-9]+"
               min="0"
               required
@@ -278,89 +298,55 @@ export default function Gigs() {
             <textarea
               placeholder="Description"
               value={description}
-              onChange={handleDescriptionChange}
-              className="w-full p-2 mb-2 text-lg h-28"
+              onChange={(e) => setDescription(e.target.value)}
+              className="field-input min-h-32"
               required
-            ></textarea>
-          </Modal>
-          <div className="w-9/12 gap-4 mt-5 lg:w-1/2 md:w-9/12">
-            {currentPosts.map((post, index) => (
-              <Card key={index} className="mb-4 border-black">
-                <div className="flex items-center justify-between mb-2">
-                  <h1 className="text-2xl font-semibold">Name: {post.name}</h1>
-                  {isLoggedIn && (
-                    <button
-                      id={post.id}
-                      className="p-2 text-white rounded-md bg-theme"
-                      onClick={() => bookmarkPost(post.id)}
-                    >
-                      {bookmarkedPosts[post.id] ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      ) : (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24 "
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-                          />
-                        </svg>
-                      )}
-                    </button>
-                  )}
-                </div>
-                <Divider></Divider>
-                <p className="mb-2 text-xl">Subject: {post.subject}</p>
-                <p className="mb-2 text-xl">
-                  Location:{" "}
-                  <span>
-                    <EnvironmentOutlined />
-                  </span>{" "}
-                  {post.location}
-                </p>
-                <p className="mb-2 text-xl">
-                  Price:{" "}
-                  <span>
-                    <DollarOutlined />
-                  </span>{" "}
-                  {post.price}
-                </p>
-                <p className="mb-2 text-xl">Description:</p>
-                <p className="pl-5 text-lg">{post.description}</p>
-              </Card>
-            ))}
+            />
           </div>
-        </div>
-      </div>
-      <Pagination
-        defaultCurrent={1}
-        current={currentPage}
-        total={filteredPosts.length}
-        pageSize={pageSize}
-        onChange={handlePageChange}
-        showQuickJumper
-        showTotal={(total, range) =>
-          `${range[0]}-${range[1]} of ${total} items`
-        }
-        className="mt-5 mb-5 text-center"
-      />
+        </Modal>
+
+        <section className="content-wrap py-10">
+          {error && (
+            <div className="mb-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+              {error}
+            </div>
+          )}
+          {currentPosts.length > 0 ? (
+            <div className="grid gap-5">
+              {currentPosts.map((post, index) => (
+                <GigCard
+                  key={post.id || `${post.name}-${index}`}
+                  post={post}
+                  isLoggedIn={isLoggedIn}
+                  isBookmarked={Boolean(bookmarkedPosts[post.id])}
+                  onBookmark={bookmarkPost}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="surface-card py-16 text-center">
+              <p className="text-xl font-black text-slate-950">
+                No gigs to show yet.
+              </p>
+              <p className="mt-2 text-slate-600">
+                Try a different search or create the first post.
+              </p>
+            </div>
+          )}
+          <Pagination
+            defaultCurrent={1}
+            current={currentPage}
+            total={filteredPosts.length}
+            pageSize={pageSize}
+            onChange={handlePageChange}
+            showQuickJumper
+            showTotal={(total, range) =>
+              `${range[0]}-${range[1]} of ${total} gigs`
+            }
+            className="mt-8 text-center"
+          />
+        </section>
+      </main>
       <Footer />
     </div>
   );

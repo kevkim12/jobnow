@@ -3,7 +3,76 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color: #111827;
+    background: #f6f8fb;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background:
+      radial-gradient(circle at top left, rgba(45, 212, 191, 0.14), transparent 30rem),
+      linear-gradient(180deg, #fbfdff 0%, #f6f8fb 52%, #eef3f8 100%);
+    color: #111827;
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
   .font-outline-1 {
     -webkit-text-stroke: 1px black;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply min-h-screen bg-slate-50 text-slate-950;
+  }
+
+  .content-wrap {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .eyebrow {
+    @apply text-sm font-bold uppercase text-teal-600;
+  }
+
+  .primary-action {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-slate-950 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-teal-200;
+  }
+
+  .secondary-action {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-teal-100;
+  }
+
+  .search-panel {
+    @apply flex w-full flex-col gap-3 rounded-md border border-slate-200 bg-white p-3 shadow-sm md:flex-row md:items-center;
+  }
+
+  .search-input {
+    @apply min-h-12 w-full flex-1 border-0 bg-transparent px-2 text-base text-slate-900 outline-none placeholder:text-slate-400;
+  }
+
+  .field-input {
+    @apply w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100;
+  }
+
+  .surface-card {
+    @apply rounded-md border border-slate-200 bg-white shadow-sm;
   }
 }
