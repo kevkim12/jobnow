@@ -35,24 +35,23 @@ JobNow is a work marketplace for people who want to move quickly between flexibl
 
 <table>
   <tr>
-    <td valign="top">
-      <strong>Home</strong><br>
-      <img src="docs/screenshots/01-home.png" alt="JobNow home page">
-    </td>
-    <td valign="top">
-      <strong>Gigs</strong><br>
-      <img src="docs/screenshots/02-gigs.png" alt="JobNow gigs page">
-    </td>
+    <th>Home</th>
+    <th>Gigs</th>
   </tr>
   <tr>
-    <td valign="top">
-      <strong>Jobs</strong><br>
-      <img src="docs/screenshots/03-jobs.png" alt="JobNow jobs page">
-    </td>
-    <td valign="top">
-      <strong>Login</strong><br>
-      <img src="docs/screenshots/04-login.png" alt="JobNow login page">
-    </td>
+    <td><img src="docs/screenshots/01-home.png" alt="JobNow home page"></td>
+    <td><img src="docs/screenshots/02-gigs.png" alt="JobNow gigs page"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Jobs</th>
+    <th>Login</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/03-jobs.png" alt="JobNow jobs page"></td>
+    <td><img src="docs/screenshots/04-login.png" alt="JobNow login page"></td>
   </tr>
 </table>
 
