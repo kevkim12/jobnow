@@ -33,21 +33,11 @@ JobNow is a work marketplace for people who want to move quickly between flexibl
 
 ## Screenshots
 
-### Home
-
-![JobNow home page](docs/screenshots/01-home.png)
-
-### Gigs
-
-![JobNow gigs page](docs/screenshots/02-gigs.png)
-
-### Jobs
-
-![JobNow jobs page](docs/screenshots/03-jobs.png)
-
-### Login
-
-![JobNow login page](docs/screenshots/04-login.png)
+| Home | Gigs |
+| --- | --- |
+| ![JobNow home page](docs/screenshots/01-home.png) | ![JobNow gigs page](docs/screenshots/02-gigs.png) |
+| Jobs | Login |
+| ![JobNow jobs page](docs/screenshots/03-jobs.png) | ![JobNow login page](docs/screenshots/04-login.png) |
 
 ## Setup Instructions
 
