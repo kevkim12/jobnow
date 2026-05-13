@@ -2,71 +2,138 @@
 
 Production Website Link: https://jobnow.onrender.com/
 
-## Prerequisites
+JobNow is a work marketplace for people who want to move quickly between flexible local gigs and longer-term job opportunities. The app gives users a polished landing page, a searchable gigs board, a job-search view powered by JSearch, account creation and login, and a saved-gigs workspace for keeping track of promising short-term work.
 
-Make sure you have `python` or `python3` installed on your machine, as well as `flask`. Also, go to https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch/details to create an account and obtain an API key.
+## Technologies Used
 
-## Installation Guide
-
-### Client
-
-Navigate to `client` folder, and create a `.env` file and add the following line:
-
-```
-VITE_API_KEY="your-api-key"
-```
-
-In the terminal window, navigate to the `client` folder, and run `npm install` to install all dependencies. Then, run `npm run dev` to start the development server.
-
-### Server
-
-Navigate to `server` folder, and create a `.env` file and add the following lines:
-
-```
-FLASK_SECRET_KEY=supersecretkey
-DATABASE_URL=sqlite:///database.db
-```
-
-In a new terminal window, navigate to the `server` folder, and create a virtual environment. 
-
-To create a virtual environment on `macOS/Linux`, run the following commands:
-
-```
-python3 -m venv .venv
-```
-
-```
-. .venv/bin/activate
-```
-
-To create a virtual environment on `Windows`, run the following commands:
-
-```
-py -3 -m venv .venv
-```
-
-```
-.venv\Scripts\activate
-```
-
-Then, run `python init.py` to initialize the database and run `python server.py` to start the backend server. You may have to use `python3` if the `python` command does not work.
-
-## Technologies & Frameworks Used
-- React.js
-- Flask
-- SQLite
-- JavaScript
-- Tailwind CSS
-- Python
-- Ant Design
+- React
 - Vite
+- React Router
+- Tailwind CSS
+- Ant Design
+- Axios
+- JavaScript
+- Python
+- Flask
+- Flask-Cors
+- SQLite
+- RapidAPI JSearch API
+- Render
 
-## API Used
-- JSearch
+## Features
 
-## Deployed on Render
-- Production Website: https://jobnow.onrender.com/
+- Responsive landing page that introduces JobNow and routes users to gigs or jobs.
+- Gig marketplace with searchable local posts, pricing, location details, and descriptions.
+- Create-gig modal for posting new short-term work opportunities.
+- User signup and login backed by a Flask API and SQLite database.
+- Bookmarking flow for saving and removing gigs from a personal shortlist.
+- Saved gigs page that loads a user's bookmarked gig posts.
+- Job search page that fetches external listings from the JSearch API.
+- Direct apply links for job-search results.
 
+## Screenshots
 
+### Home
 
+![JobNow home page](docs/screenshots/01-home.png)
 
+### Gigs
+
+![JobNow gigs page](docs/screenshots/02-gigs.png)
+
+### Jobs
+
+![JobNow jobs page](docs/screenshots/03-jobs.png)
+
+### Login
+
+![JobNow login page](docs/screenshots/04-login.png)
+
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js and npm
+- Python 3
+- A RapidAPI account with access to the JSearch API
+
+### Server Setup
+
+1. Navigate to the server folder:
+
+   ```bash
+   cd server
+   ```
+
+2. Create a `.env` file:
+
+   ```env
+   FLASK_SECRET_KEY=supersecretkey
+   DATABASE_URL=sqlite:///database.db
+   ```
+
+3. Create and activate a virtual environment.
+
+   macOS/Linux:
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+   Windows:
+
+   ```bash
+   py -3 -m venv .venv
+   .venv\Scripts\activate
+   ```
+
+4. Install Python dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. Initialize the database:
+
+   ```bash
+   python init.py
+   ```
+
+6. Start the Flask server:
+
+   ```bash
+   python server.py
+   ```
+
+### Client Setup
+
+1. Open a second terminal and navigate to the client folder:
+
+   ```bash
+   cd client
+   ```
+
+2. Create a `.env` file and add your JSearch API key:
+
+   ```env
+   VITE_API_KEY=your-rapidapi-key
+   ```
+
+3. Install client dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. If you want the client to use your local Flask server, update `client/src/config.js`:
+
+   ```js
+   const API_URL = "http://localhost:5000";
+   ```
+
+5. Start the Vite development server:
+
+   ```bash
+   npm run dev
+   ```
