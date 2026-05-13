@@ -1,10 +1,11 @@
 import {
+  CheckCircleOutlined,
   MailOutlined,
   SafetyCertificateOutlined,
   UserAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +15,7 @@ import {
   validateName,
   validatePassword,
 } from "../utility/Validation";
-import { useAuth } from "./AuthContext";
+import BrandLogo from "./layout/BrandLogo";
 import Footer from "./layout/Footer";
 
 export default function Signup() {
@@ -22,7 +23,6 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSignup = async (values) => {
@@ -38,7 +38,7 @@ export default function Signup() {
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setError("Email already exists!");
+        setError("Email already exists.");
       } else {
         const errorMessage = error.response
           ? error.response.data.error
@@ -54,23 +54,34 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center w-full h-screen">
-        <Card className="w-3/4 border-black shadow-2xl lg:w-1/3 md:w-1/2 rounded-xl">
-          <h1 className="mb-2 text-3xl text-center text-black">Sign Up</h1>
-          <h1 className="mb-4 text-lg text-center">
-            Just a few quick things to get started!
-          </h1>
+    <div className="page-shell">
+      <main className="content-wrap grid min-h-[calc(100vh-5rem)] items-center gap-8 py-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <section className="surface-card mx-auto w-full max-w-md p-6 sm:p-8">
+          <BrandLogo showTagline />
+          <div className="mt-8">
+            <p className="eyebrow">Create account</p>
+            <h1 className="mt-3 text-3xl font-black text-slate-950">
+              Start saving better matches.
+            </h1>
+            <p className="mt-3 leading-7 text-slate-600">
+              A few details get your JobNow account ready.
+            </p>
+          </div>
+
           {error && (
-            <div className="mb-2 text-center text-red-600">{error}</div>
+            <div className="mt-5 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-center text-sm font-semibold text-red-700">
+              {error}
+            </div>
           )}
+
           <Form
-            name="basic"
+            name="signup"
             onFinish={handleSignup}
             onFinishFailed={onFinishFailed}
             initialValues={{ remember: true }}
             autoComplete="off"
             layout="vertical"
+            className="mt-7"
           >
             <Form.Item
               label="Name"
@@ -94,10 +105,11 @@ export default function Signup() {
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                className="!min-h-11 !rounded-md"
               />
             </Form.Item>
             <Form.Item
-              label="Email Address"
+              label="Email address"
               name="email"
               rules={[
                 { required: true, message: "An email address is required." },
@@ -111,9 +123,10 @@ export default function Signup() {
             >
               <Input
                 prefix={<MailOutlined />}
-                placeholder="Email"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="!min-h-11 !rounded-md"
               />
             </Form.Item>
             <Form.Item
@@ -138,21 +151,52 @@ export default function Signup() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="!min-h-11 !rounded-md"
               />
             </Form.Item>
             <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-full bg-[#0756da] rounded-lg"
+                className="!h-12 !w-full !rounded-md !bg-teal-500 !font-black !text-slate-950 hover:!bg-teal-400"
                 icon={<UserAddOutlined />}
               >
                 Sign up
               </Button>
             </Form.Item>
           </Form>
-        </Card>
-      </div>
+        </section>
+
+        <section className="relative hidden min-h-[640px] overflow-hidden rounded-md bg-slate-950 lg:block">
+          <img
+            src="/moving-out-image.webp"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover opacity-65"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-10 text-white">
+            <p className="eyebrow text-orange-300">Why join</p>
+            <h2 className="mt-4 text-4xl font-black leading-tight">
+              Keep flexible work within reach.
+            </h2>
+            <div className="mt-6 grid gap-3">
+              {[
+                "Save gigs you want to revisit",
+                "Move between gigs and job search",
+                "Use a cleaner account workspace",
+              ].map((item) => (
+                <p
+                  className="flex items-center gap-3 font-semibold text-slate-100"
+                  key={item}
+                >
+                  <CheckCircleOutlined className="text-teal-300" />
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
       <Footer />
     </div>
   );
